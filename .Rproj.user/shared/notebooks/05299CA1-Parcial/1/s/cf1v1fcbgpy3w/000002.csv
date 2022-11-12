@@ -1,0 +1,4 @@
+"0","```r
+Significancia <- 0.95
+Alpha <- 1 - Significancia
+```"

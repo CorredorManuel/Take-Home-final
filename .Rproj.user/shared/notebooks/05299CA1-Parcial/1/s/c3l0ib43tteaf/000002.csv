@@ -1,0 +1,19 @@
+"0","```r
+TypeSerie = 'SerieZ' #Opciones \"SerieZ\" \"SerieX\" 
+if (TypeSerie == 'SerieZ' ){
+  Datos_Base <- zt
+  } else if (TypeSerie == 'SerieX') {
+    Datos_Base <- xt
+  }
+#Se crea una matriz sin datos 
+Serie <- matrix(data=NA,ncol =1 ,nrow = length(Datos_Base))
+#Se fija que el primer dato sea igual a 0
+Serie[1] <- 0
+#Se programa un \"for\" que llene la matriz anteriormente creada, realizando una suma para Z en la posición[i-1] más Z en la posición [i] 
+
+for(i in 2:length(Datos_Base)){
+  Serie[i] <- Serie[i-1]+Datos_Base[i] 
+}
+head(Serie)
+tail(Serie)
+```"

@@ -1,0 +1,4 @@
+"0","```r
+library(readr)
+ Datosfinal<- read_csv2(\"Data/mincer1.csv\")
+```"

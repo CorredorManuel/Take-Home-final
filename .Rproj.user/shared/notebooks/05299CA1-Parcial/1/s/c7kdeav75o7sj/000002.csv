@@ -1,0 +1,16 @@
+"0","```r
+#Se crea una varibale llamada vector, vacía
+vector <- NA
+#Se programa una función que reste la diferencia entre la variable vector en la posición[i]-[i-1]. Para que esto funcione, el \"for\"\" debe iniciar desde el segundo dato
+
+Restar<-function(x){ 
+  for(i in 2:length(x)){
+    vector[i] <- x[i]-(x[i-1])
+  }
+  return(vector)
+}
+#Se aplica la función
+vector1 <- (Restar(suma1))
+head(vector1)
+tail(vector1)
+```"

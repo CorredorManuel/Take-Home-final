@@ -1,0 +1,7 @@
+"0","```r
+betas <- solve(t(X)%*%X)%*%t(X)%*%ye
+betas
+mincer <- lm(ye~X)
+#Confirmación de lo betas con comando directo
+coefficients(mincer)
+```"

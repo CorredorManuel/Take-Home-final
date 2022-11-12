@@ -1,0 +1,17 @@
+"0","```r
+table(Sexo)
+Hombres <- 3122
+Mujeres <- 2722
+total_individuos <- Hombres+Mujeres
+Peso_Hombres <- (Hombres/total_individuos)*100
+Peso_Mujeres <- (Mujeres/total_individuos)*100
+Peso_Hombres
+Peso_Mujeres
+#para esta grafica usamos el grafico de barras pero ajustamos la cordena polar
+ggplot(data = as.data.frame(Variables1), aes(x=1, y=Ingreso, fill=Sexo)) +
+        geom_bar(stat=\"identity\") +
+        geom_text(x=0.6,y=1,label=paste(\"53.42%                 46.57%\"))+
+        coord_polar(theta = \"y\") + 
+        theme_void()
+      
+```"

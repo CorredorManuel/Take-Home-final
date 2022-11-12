@@ -1,0 +1,13 @@
+"0","```r
+Rezagar <- function(x,n){{
+  Rezague <- x[-c(1:n)] 
+}
+return(Rezague)
+}
+suma1.1 <- c(Rezagar(suma1,260))
+
+length(suma1)
+length(suma1.1)
+tail(suma1)
+head(suma1.1)
+```"

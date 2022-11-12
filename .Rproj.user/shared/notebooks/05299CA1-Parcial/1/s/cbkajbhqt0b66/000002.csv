@@ -1,0 +1,12 @@
+"0","```r
+#Para confirmar el Jarque-Bera 
+calcular <- Serie #Se debe escoger la distribución= \"Serie\",\"zt\",\"xt\"
+n <- length(calcular)
+n
+xbarra <- mean(calcular)
+xbarra
+arriba <- (1/n)*sum((calcular-xbarra)^3)
+abajo <- ((1/n)*(sum((calcular-xbarra)^2)))^(3/2)
+S <- arriba/abajo
+S
+```"

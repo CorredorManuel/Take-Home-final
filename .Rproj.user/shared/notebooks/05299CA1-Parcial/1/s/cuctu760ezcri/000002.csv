@@ -1,0 +1,4 @@
+"0","```r
+aggregate(Ingreso~Sexo, data = Variables1, mean)
+
+```"

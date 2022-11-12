@@ -1,0 +1,7 @@
+"0","```r
+#Crear vector de productividad y de la tasa de desempleo para encontrar la correlación
+VectorProductivididad <- c(Productividad) 
+VectorTD <- c(TD)
+#Cálculo de la correlación con comando directo
+cor(VectorProductivididad,VectorTD)
+```"

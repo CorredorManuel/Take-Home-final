@@ -1,0 +1,7 @@
+"0","```r
+egorro <- c(ye-ygorro)
+#Se nombra una variable para realizar una resta y confirmar el vector de los residuales estimados
+egorro1<- residuals(mincer)
+revisar <- egorro-egorro1
+sum(revisar)
+```"

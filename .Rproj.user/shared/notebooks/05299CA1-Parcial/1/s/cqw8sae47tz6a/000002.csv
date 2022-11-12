@@ -1,0 +1,14 @@
+"0","```r
+#Rezague variable \"Years\"
+years <- Datos1$Years
+#Rezague variable variación
+Linea1 <- Datos1$Variacion
+#Se une en una data las dos variables
+fig_data1 <- tibble(\"year\"=years,\"Linea\"=Linea1)
+#Se estipula n como el tamaño de la variable \"years\"
+n1 <- length(years)
+#Se agrega una columna rellena con el caracter Original para crear una diferenciación
+fig_data1$Convenciones=rep(\"Original\",n1)
+#Creamos una nueva data con la información anterior
+Line_1_time_series <- fig_data1
+```"

@@ -1,0 +1,7 @@
+"0","```r
+n <- length(Datosfinal$Edad)
+k <- 5
+
+r2ajustado <- 1-((n-1)/(n-(k+1)))*(1-r2)
+r2ajustado
+```"

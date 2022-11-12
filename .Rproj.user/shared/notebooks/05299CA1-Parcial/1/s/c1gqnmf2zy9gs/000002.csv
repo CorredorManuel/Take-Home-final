@@ -1,0 +1,8 @@
+"0","```r
+PIBacumulado <- c(frecuenciaPIB)
+#Se crea un \"for\" que sume el ingreso en la posición [i+1] más el ingreso en la posición [i], desde el valor 2 hasta n(tamaño de la variable)
+for(i in 2:n){
+  PIBacumulado[i] <- (PIBacumulado[i+1])+PIBacumulado[i]
+}
+ParteIngreso <- c(PIBacumulado[-c(33,33)])
+```"

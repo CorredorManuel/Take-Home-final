@@ -1,0 +1,5 @@
+"0","```r
+library(readxl)
+Variables1 <- read_excel(\"Data/Ingreso y genero.xlsx\")
+#View(Variables1)
+```"

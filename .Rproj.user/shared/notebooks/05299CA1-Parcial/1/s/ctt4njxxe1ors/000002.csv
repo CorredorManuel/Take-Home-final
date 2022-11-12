@@ -1,0 +1,6 @@
+"0","```r
+arriba2 <- (1/n)*sum((calcular-xbarra)^4)
+abajo2 <- ((1/n)*(sum((calcular-xbarra)^2)))^(2)
+K <- arriba2/abajo2
+K
+```"

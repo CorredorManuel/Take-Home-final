@@ -1,0 +1,13 @@
+"0","```r
+#Tamaño de muestra
+n <- length(Libro1$`DORMIR=1 NO DORMIR=0`)
+n
+#Calcular TiempoDormir promedio (X barra)
+Tiempobarra <- sum(TIEMPODORMIR)/n
+Tiempobarra
+#Calcular varianza muestral (Scuad)
+NumS <- sum((TIEMPODORMIR-Tiempobarra)**2)
+DenS <- n-1
+Scuad<- NumS/DenS
+Scuad
+```"

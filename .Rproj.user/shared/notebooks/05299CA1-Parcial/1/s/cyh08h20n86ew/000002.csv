@@ -1,0 +1,8 @@
+"0","```r
+#Se emplea el mismo \"for\", pero esta vez se cambia la variable
+DEPacumulado <- c(frecuenciaPOB)
+for(i in 2:n){
+  DEPacumulado[i] <- (DEPacumulado[i+1])-DEPacumulado[i]
+}
+PartePoblacion <- c(DEPacumulado[-c(33,33)])
+```"

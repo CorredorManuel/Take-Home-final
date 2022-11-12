@@ -1,0 +1,8 @@
+"0","```r
+ValorCritico <- qchisq(p = 0.95,df = 2,FALSE)
+if(Jb < ValorCritico ) {
+  \"Presenta una distribución normal\"
+} else {
+  \"No presenta una distribución normal\"
+}
+```"

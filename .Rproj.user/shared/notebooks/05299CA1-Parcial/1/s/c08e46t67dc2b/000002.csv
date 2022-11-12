@@ -1,0 +1,9 @@
+"0","```r
+n <- length(variacion1)-7
+#Crear un \"for\" que calcule el promedio de 6 valores desde la posición 1 hasta n
+for(i in 1:n){
+  suma1[i] <- sum(variacion1[i+1:6]/6)
+}
+head(suma1)
+tail(suma1)
+```"

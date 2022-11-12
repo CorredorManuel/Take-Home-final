@@ -1,0 +1,5 @@
+"0","```r
+Productividad <- as.matrix(Productividad)
+X <- cbind(1,Productividad)
+X
+```"

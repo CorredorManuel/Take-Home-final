@@ -1,0 +1,12 @@
+"0","```r
+options(scipen=999)
+library(ggplot2)
+ggplot(Tasa_desempleo, aes(x=Productividad, y=`Tasa desempleo`)) +   geom_point()+geom_smooth(formula = y ~ x, method = \"lm\", col=\"firebrick\")+ ggtitle(\"Tasa de desempleo según la productividad\", subtitle=\"\") + xlab(\"Productividad\") + ylab(\"Tasa de desempleo\")+
+  theme(plot.title = element_text(hjust = 0.5, size = 20, color = \"navy\"))+
+  theme(plot.subtitle =element_text(hjust = 0.5, size = 10, color = \"black\") )+
+  scale_y_continuous(labels=function(n){format(n, scientific = FALSE)})
+
+modelo <- lm(Tasa_desempleo$`Tasa desempleo`~Tasa_desempleo$Productividad)
+plot(x=Tasa_desempleo$Productividad,y=Tasa_desempleo$`Tasa desempleo`)
+abline(modelo)
+```"

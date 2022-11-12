@@ -1,0 +1,6 @@
+"0","```r
+Mult <- ParteIngreso*PartePoblacion
+coeficientedeGini <- 1-sum(Mult)
+my_string <- \"El coeficiente de Gini es = \"
+print(paste(my_string, coeficientedeGini))
+```"

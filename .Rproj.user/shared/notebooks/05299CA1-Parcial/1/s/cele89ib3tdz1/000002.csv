@@ -1,0 +1,4 @@
+"0","```r
+varcov <- vare*solve(t(X)%*%X)
+varcov
+```"

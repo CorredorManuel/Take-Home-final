@@ -1,0 +1,5 @@
+"0","```r
+library(readxl)
+Libro1 <- read_excel(\"Data/Intervalo confianza.xlsx\")
+#View(Libro1)
+```"

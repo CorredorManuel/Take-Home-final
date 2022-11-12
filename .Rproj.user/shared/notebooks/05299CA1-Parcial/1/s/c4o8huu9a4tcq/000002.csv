@@ -1,0 +1,6 @@
+"0","```r
+library(dplyr)
+Variables1$Sexo=recode(Variables1$Sexo,`1`=\"Hombre\",`2`=\"mujer\")
+Ingreso <- (Variables1$Ingreso)
+Sexo <- (Variables1$Sexo)
+```"

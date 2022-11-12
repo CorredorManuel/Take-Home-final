@@ -1,0 +1,6 @@
+"0","```r
+LimInf<- Tiempobarra-MAI
+LimSup <- Tiempobarra+MAI
+LimInf
+LimSup
+```"

@@ -1,0 +1,4 @@
+"0","```r
+#Calcular B0 estimado
+Beta0 <- Ybarra-(Beta1*Xbarra)
+```"

@@ -1,0 +1,12 @@
+"0","```r
+#Para encontrar la cantidad de datos
+length(Ingreso)
+#Para encontrar la media
+mean(Ingreso)
+#Para encontrar la desviación estándar
+sd(Ingreso)
+#Para encontrar la mediana
+median(Ingreso)
+#Para calcular los cuantiles
+summary(Ingreso)
+```"

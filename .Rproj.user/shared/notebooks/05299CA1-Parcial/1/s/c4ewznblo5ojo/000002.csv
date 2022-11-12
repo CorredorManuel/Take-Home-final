@@ -1,0 +1,23 @@
+"0","```r
+#Se crea una repetición con el caracter Media Móvil usando el mismo tamaño n1
+Convenciones <- rep(\"Media Móvil 6\",n1)
+#Asignamos un nombre a los valores de la media móvil que se creó con el \"for\"
+Linea2 <- c(NA,NA,NA,NA,NA,NA,suma1)
+#Se une en una data las tres variables
+Line_2_time_series <- tibble(\"Convenciones\"=Convenciones,\"year\"=years,\"Linea\"=Linea2)
+#Combinamos las dos tablas con bind_rows
+all_time_series <- bind_rows(Line_1_time_series,Line_2_time_series)
+#Creacion del grafico lineal
+ggplot(all_time_series,(aes(x=year,y=Linea,group=Convenciones,linetype=Convenciones,color=Convenciones)))+
+  geom_line()+
+  ggtitle(\"Variación IPC Núcleo 15\", subtitle=\"Se excluyen del IPC las subclases
+   que registraron la mayor volatilidad de precios \") +
+  labs(x=\"Años\",y=\"Variación %\" )+
+  theme(plot.title = element_text(hjust = 0.5,size=20,color=\"navy\"))+ 
+  theme(plot.subtitle = element_text(hjust = 0.5,size=12,color=\"black\"))+
+  theme(axis.text.x =  element_text(hjust = 0.5,size=12,color=\"black\"))+
+  theme(axis.text.y =  element_text(hjust = 0.5,size=12,color=\"black\"))+
+  theme(axis.title.x =  element_text(hjust = 0.5,size=15,color=\"navy\"))+
+  theme(axis.title.y =  element_text(hjust = 0.5,size=15,color=\"navy\"))
+
+```"

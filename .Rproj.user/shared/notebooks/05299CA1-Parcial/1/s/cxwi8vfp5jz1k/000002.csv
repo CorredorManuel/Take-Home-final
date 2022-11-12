@@ -1,0 +1,5 @@
+"0","```r
+#Transformación a logaritmo de la variable del salario
+ye <- log(Ingreso)
+
+```"

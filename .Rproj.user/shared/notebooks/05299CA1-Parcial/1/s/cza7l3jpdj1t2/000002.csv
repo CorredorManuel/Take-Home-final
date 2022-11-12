@@ -1,0 +1,4 @@
+"0","```r
+library(normtest)
+jb.norm.test(calcular)
+```"

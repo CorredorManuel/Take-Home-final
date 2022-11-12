@@ -1,0 +1,7 @@
+"0","```r
+
+sec <- (ygorro-mean(ye))**2
+stc <- (ye-mean(ye))**2
+r2 <- sum(sec)/sum(stc)
+r2
+```"

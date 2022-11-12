@@ -1,0 +1,7 @@
+"0","```r
+
+K <- 5
+N <- length(egorro)
+vare <- (1/(N-(K+1)))*sum(t(egorro)%*%egorro)
+vare
+```"

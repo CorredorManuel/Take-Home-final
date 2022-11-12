@@ -1,0 +1,8 @@
+"0","```r
+ygorro <- (X%*%betas)
+
+#Se nombra una variable para realizar una resta y confirmar el vector de la variable explicada estimada
+ygorro1 <- fitted(mincer)
+revisar1 <- ygorro-ygorro1
+sum(revisar1)
+```"

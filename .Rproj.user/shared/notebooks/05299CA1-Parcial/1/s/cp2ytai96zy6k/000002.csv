@@ -1,0 +1,6 @@
+"0","```r
+#Calcular B1 estimado
+Num <- sum((VectorProductivididad*(VectorTD-Ybarra)))
+Den <- sum((VectorProductivididad*(VectorProductivididad-Xbarra)))
+Beta1 <- Num/Den
+```"

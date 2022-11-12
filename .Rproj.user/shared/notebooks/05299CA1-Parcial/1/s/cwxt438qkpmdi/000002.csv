@@ -1,0 +1,9 @@
+"0","```r
+#Fijamos la semilla
+set.seed(1000)
+#Valores aleatorios con distribución normal
+zt <- rnorm(n = 2000,mean = 100,sd = 1)
+#Valores aleatorios con distribución uniforme
+xt <- runif(n = 2000,min = 90, max = 110)
+#plot(xt)
+```"

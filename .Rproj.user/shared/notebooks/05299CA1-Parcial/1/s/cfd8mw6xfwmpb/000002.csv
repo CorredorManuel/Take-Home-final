@@ -1,0 +1,5 @@
+"0","```r
+library(readxl)
+Datos1 <- read_excel(\"Data/medidas de inflacion basica.xlsx\")
+#View(medidas_de_inflacion_basica)
+```"

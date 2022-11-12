@@ -1,0 +1,16 @@
+"0","```r
+#Asignación a las variables provenientes del DataFrame
+PIB <- Datos$PIB
+POBLACION <- Datos$POBLACION
+#Se especifica el valor de n el cual es el tamaño de la variable PIB
+n <- length(PIB)
+#Suma de los totales del PIB y de la población
+sumaPIB <- sum(Datos$PIB)
+sumaPoblacion <- sum(POBLACION)
+#Dividir cada dato sobre el total --> Proporciones
+ProporcionPIB <- (PIB/sumaPIB)
+ProporcionPOB <- (POBLACION/sumaPoblacion)
+#Ahora se calcula la frecuencia acumulada de los valores anteriores
+frecuenciaPIB <- (cumsum(ProporcionPIB))
+frecuenciaPOB <- (cumsum(ProporcionPOB))
+```"

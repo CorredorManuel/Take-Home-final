@@ -1,0 +1,14 @@
+"0","```r
+ggplot(data = as.data.frame(Variables1), aes(x=Sexo, y=Ingreso, fill=Sexo)) +
+        geom_bar(stat=\"identity\")+
+        ggtitle(\"Grafico de Barras del Ingreso\")+
+        labs(x=\"Ingreso\",y=\"Densidad\" )+
+        theme(plot.title = element_text(hjust = 0.5,size=20,color=\"Black\"))+ 
+        theme(plot.subtitle = element_text(hjust = 0.5,size=12,color=\"black\"))+
+        theme(axis.text.x =  element_text(hjust = 0.5,size=12,color=\"black\"))+
+        theme(axis.text.y =  element_text(hjust = 0.5,size=12,color=\"black\"))+
+        theme(axis.title.x =  element_text(hjust= 0.5,size=15,color=\"orangered4\"),axis.text.x=element_blank(),
+              axis.ticks.x=element_blank())+
+        theme(axis.title.y =  element_text(hjust = 0.5,size=15,color=\"orangered4\"))
+  
+```"

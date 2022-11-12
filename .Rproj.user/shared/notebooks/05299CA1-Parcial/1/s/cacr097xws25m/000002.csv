@@ -1,0 +1,14 @@
+"0","```r
+
+#Calcular X barra y Y barra
+n=length(VectorProductivididad)
+Xbarra <- sum(VectorProductivididad)/n
+Ybarra <- sum(VectorTD)/n
+
+#Calcular la correlación
+Numerador <-(sum((VectorProductivididad-Xbarra)*(VectorTD-Ybarra)))/n
+Denominador1 <- sqrt((sum((VectorProductivididad-Xbarra)**2))/(n-1))
+Denominador2 <- sqrt((sum((VectorTD-Ybarra)**2))/(n-1))
+Corr <- Numerador/(Denominador1*Denominador2)
+
+```"

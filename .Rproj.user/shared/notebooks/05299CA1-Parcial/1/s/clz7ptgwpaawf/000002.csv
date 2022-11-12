@@ -1,0 +1,11 @@
+"0","```r
+aniosesco <- as.matrix(Datosfinal$`Años de Educacion`)
+expotencial <- as.matrix(Datosfinal$exp)
+expotencial2 <- as.matrix(Datosfinal$exp2)
+Sexo <- as.matrix(Datosfinal$Sexo)
+Ingreso <- as.matrix(Datosfinal$Ingreso)
+Sexo1 <- as.matrix(recode(Sexo,`1`=1,`2`=0))
+#de esta manera se crea una Dummy Categorica
+SexoDummy <- as.matrix(recode(Sexo,`1`=\"hombre\",`2`=\"mujer\"))
+
+```"

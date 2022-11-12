@@ -1,0 +1,4 @@
+"0","```r
+library(readxl)
+Datos <- read_excel(\"Data/anexo-2020-preliminar-PIB-total-por-departamento.xlsx\")
+```"
