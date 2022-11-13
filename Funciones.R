@@ -99,10 +99,36 @@ ACFfun00 <- function(Z,K){
     denominador <- sum((Z-media)^2)
     ACF[k+1] <- numerador/denominador
   }
-  #plot(ACF,type="h")
-  return(ACF)
+  plot(ACF,type="h")
+  #return(ACF)
 }
 
+
+PACFfun <- function(Z,K){
+  N <- length(Z)
+  ACF <- ACF[-c(1)] #con esto se soluciona el problema  de la grafica que inica en 1
+  PACF <- matrix(data = NA,nrow = (K),ncol = 1)
+  for (k in 1:K) {
+    denominador <- matrix(data = NA,nrow = k,ncol = k)
+    for(i in 1:k){
+      for(j in 1:k){
+        if(i==j){
+          denominador[i,j] <- 1
+        }else{
+          denominador[i,j] <- ACF[abs(i-j)]  
+        }
+      }
+    }
+    numerador <- denominador
+    numerador[,k] <- ACF[1:k]
+    
+    PACF[k] <- det(numerador)/det(denominador)
+    
+  }
+  plot(PACF,type="h")
+  #return(PACF)
+  #PACF
+}
 
 #funcion que encuentra el orden P
 p_encontrase <- function(pmax,data){
@@ -201,4 +227,16 @@ base <-ggplot() + xlim(-8, 8)+
         legend.background = element_rect(fill = "white"))
 
 final <-  base + labs(title = 'Curva de distribución t',subtitle = 'verificacion de significancia del coeficiente P de ADF',color='valor t estadistico')
+
+
+
+
+d_rezagos <- function(data,d){
+  d1 <- matrix(data=NA,nrow = T,ncol = 1)
+  for(i in 2:T){
+    d1[i-1] <- data[i]-data[i-1]
+    d1 <- d1[1:(T-d)]
+  }
+  d1
+}
 
