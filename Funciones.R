@@ -99,12 +99,12 @@ ACFfun00 <- function(Z,K){
     denominador <- sum((Z-media)^2)
     ACF[k+1] <- numerador/denominador
   }
-  plot(ACF,type="h")
-  #return(ACF)
+  #plot(ACF,type="h")
+  return(ACF)
 }
 
 
-PACFfun <- function(Z,K){
+PACFfun <- function(Z,K,ACF){
   N <- length(Z)
   ACF <- ACF[-c(1)] #con esto se soluciona el problema  de la grafica que inica en 1
   PACF <- matrix(data = NA,nrow = (K),ncol = 1)
