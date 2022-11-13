@@ -28,24 +28,220 @@ View(Datos_PIB_y_exportaciones)
 PIB<-log(Datos_PIB_y_exportaciones$PIB)
 Exportaciones<-log(Datos_PIB_y_exportaciones$Exportaciones)
 
-
+N<-length(PIB)
 ```
 
 En la tesis presentada por el docente de la Universidad del Valle Omar A. Ríos, se demuestra que entre el crecimiento del PIB a precios constantes de Colombia y las exportaciones en Colombia para el período comprendido entre los años 2000 y 2013 existe cointegración, partiendo de que en esos años se había establecido causalidad entre ellas debido a las políticas de libre comercio que había en ese momento (Rendón, 2007), ya que se verifica dentro del documento que son variables I(1) y que existe un único vector de cointegración que anula la tendencia común entre estas dos variables.
 
 PUNTO 2: VERIFICACIÓN DE LA EXISTENCIA DE COINTEGRACIÓN
 
+
+```{r}
+source("~/GitHub/Take-Home-final/Funciones.R")
+```
+
 Para la verificación de la cointegración entre estas dos variables el primer paso a seguir es determinar mediante las pruebas de raíz unitaria si existe raíz unitaria en estas dos variables. Para ello es imperativo determinar el p que genera ruido blanco en los residuales, con el cual hay parsimonia y además es significativo.
+
+```{r}
+ordenp1<-p_encontrase(30,PIB)
+ordenp2<-p_encontrase(30,Exportaciones)
+
+ACFPIB<-ACFfun00(PIB,trunc(N/4))
+plot(ACFPIB,type="h")
+
+PACFPIB<-PACFfun(PIB,trunc(N/4),ACFPIB)
+
+ACF<-ACFfun00(Exportaciones,trunc(N/4))
+
+pacf(Exportaciones)
+
+ordenp1diff<-p_encontrase(30,diff(PIB))
+ordenp2diff<-p_encontrase(30,diff(Exportaciones))
+```
+
+Como ningún p es significativo y que genere ruido blanco al mismo tiempo, asumiremos un p de 1, ya que mirando la PACF, el Phi11 es significativo.
+
+El p determina si utilizamos DF o ADF. Si p=1, se utiliza DF, si p>1, se utiliza ADF. En este caso, utilizaremos DF para ambas series.
+
+Se deben contemplar los 3 esquemas posibles:
+
+$$
+\Delta Y_t=\gamma Y_{t-1}+ \varepsilon_t\\
+\Delta Y_t=\alpha +\gamma Y_{t-1}+\varepsilon_t\\
+\Delta Y_t=\alpha +\beta t+\gamma Y_{t-1}+\varepsilon_t
+$$
+
+Es necesario estimar por OLS y hallar la significancia de cada coeficiente. Iniciaremos con el gamma utilizando el tercer esquema, que nos dirá si existe raíz unitaria. Para eso utilizaremos una función llamada Etapas, en la que la etapa 1 realiza todo el procedimiento con Tau Tau, la etapa 3 realiza todo el procedimiento con Tau Mu, y la etapa 4 realiza todo el procedimiento con Tau.
+
+Iniciaremos con Tau Tau
+
+```{r}
+PIBTauTau<-Etapas(PIB,"etapa1")
+ExpTauTau<-Etapas(Exportaciones,"etapa1")
+
+verificarse3 <- TaoTest(100,50000,"taotao") #calculo con intercepto y tendencia
+Valor_tautau <- quantile(verificarse3,probs = c(0.01,0.05,0.1))
+  
+
+if( PIBTauTau[3]<Valor_tautau[2]) {#se toma la siginficancia al 5% del estadisitico
+       "Gamma es estadisticamente diferente de cero en la serie del PIB, es significativo"
+    } else {
+      "Gamma es estadisticamente  cero en la serie del PIB, no es significativo"
+    }
+if( ExpTauTau[3]<Valor_tautau[2]) {#se toma la siginficancia al 5% del estadisitico
+       "Gamma es estadisticamente diferente de cero en la serie de las exportaciones, es significativo"
+    } else {
+      "Gamma es estadisticamente  cero en la serie de las exportaciones, no es significativo"
+    }
+
+```
+La hipótesis nula es que gamma es igual a cero, y la hipótesis alterna gamma es diferente de cero. Con base en el estadístico TauTau que nos arrojó el resultado anterior, caemos en la zona de no rechazo con la información de ambas variables, por lo tanto gamma es igual a cero y existe raíz unitaria. A continuación probaremos la significancia del beta asociado con la tendencia utilizando el estadístico tipo f Phi3
+
+```{r}
+library(urca)
+    #summary(ur.df(y=matriz, type = "trend",lags=1)) ###con este summary se puede obtener el valor phi3
+    valor_phi3 <- 6.49
+
+
+    if(PIBTauTau[3]&PIBTauTau[2]>valor_phi3) {# esta es una prueba tipo F por lo tanto la cola derecha es la zona de rechazo
+      "Gamma y el Coeficiente relacionado con la tendencia no es cero, es significativo para el PIB"
+    } else {
+      "Gamma y el Coeficiente relacionado con la tendencia es cero, no es significativo para el PIB"
+    }
+    
+    if(ExpTauTau[3]&ExpTauTau[2]>valor_phi3) {# esta es una prueba tipo F por lo tanto la cola derecha es la zona de rechazo
+      "Gamma y el Coeficiente relacionado con la tendencia no es cero, es significativo para las exportaciones"
+    } else {
+      "Gamma y el Coeficiente relacionado con la tendencia es cero, no es significativo para las exportaciones"
+    }
+```
+
+Como el resultado fue que ni el gamma ni el coeficiente relacionado con la tendencia son significativos, pasamos a probar con el esquema 2, el estadístico TauMu.
+
+```{r}
+PIBTauMu<-Etapas(PIB,"etapa3")
+ExpTauMu<-Etapas(Exportaciones,"etapa3")
+
+verificarse3 <- TaoTest(100,50000,"taomiu") #calculo con intercepto y tendencia
+Valor_taumu <- quantile(verificarse3,probs = c(0.01,0.05,0.1))
+  
+
+if( PIBTauMu[2]<Valor_taumu[2]) {#se toma la siginficancia al 5% del estadisitico
+       "Gamma es estadisticamente diferente de cero en la serie del PIB, es significativo"
+    } else {
+      "Gamma es estadisticamente  cero en la serie del PIB, no es significativo"
+    }
+if( ExpTauMu[2]<Valor_taumu[2]) {#se toma la siginficancia al 5% del estadisitico
+       "Gamma es estadisticamente diferente de cero en la serie de las exportaciones, es significativo"
+    } else {
+      "Gamma es estadisticamente  cero en la serie de las exportaciones, no es significativo"
+    }
+```
+La hipótesis nula es que gamma es igual a cero, y la hipótesis alterna gamma es diferente de cero. Con base en el estadístico TauMu que nos arrojó el resultado anterior, caemos en la zona de no rechazo con la información de ambas variables, por lo tanto gamma es igual a cero y existe raíz unitaria. A continuación probaremos la significancia del alpha (intercepto) utilizando el estadístico tipo f Phi1
+
+```{r}
+valor_phi1 <- 4.71
+    
+    if(PIBTauMu[2]&PIBTauMu[1]>valor_phi1) {
+      "Gamma y el Intercepto no son cero estadisticamente, es significativo para el PIB"
+    } else {
+      "Gamma y el Intercepto son cero estadisticamente, no es significativo para el PIB"
+    }
+
+    if(ExpTauMu[2]&ExpTauMu[1]>valor_phi1) {
+      "Gamma y el Intercepto no son cero estadisticamente, es significativo para las exportaciones"
+    } else {
+      "Gamma y el Intercepto son cero estadisticamente, no es significativo para las exportaciones"
+    }
+```
+
+Como el resultado fue que ni el gamma ni el  intercepto son significativos, pasamos a probar con el esquema 1, el estadístico Tau.
+
+```{r}
+PIBTau<-Etapas(PIB,"etapa4")
+ExpTau<-Etapas(Exportaciones,"etapa4")
+
+verificarse3 <- TaoTest(100,50000,"tao") #calculo con intercepto y tendencia
+Valor_tau <- quantile(verificarse3,probs = c(0.01,0.05,0.1))
+
+if(PIBTau<Valor_tau[2]) {#se toma la siginficancia al 5% del estadisitico
+      "Gamma es estadisticamente diferente de cero, es significativo para el PIB"
+    } else {
+      "Gamma es estadisticamente  cero, no es significativo para el PIB"
+    }    
+if(ExpTau<Valor_tau[2]) {#se toma la siginficancia al 5% del estadisitico
+      "Gamma es estadisticamente diferente de cero, es significativo para las exportaciones"
+    } else {
+      "Gamma es estadisticamente  cero, no es significativo para las exportaciones"
+    }    
+```
+
+Comparando con el estadístico tipo t de cada coeficiente, concluimos sobre la tendencia y el intercepto con el valor crítico de una distribución t-student con (t-k) grados de libertad.
 
 ```{r}
 
 ```
 
-El p determina si utilizamos DF o ADF. Si p=1, se utiliza DF, si p>1, se utiliza ADF. En este caso, porque el resultado fue p=??? y p=???, procederemos a utilizar las pruebas tipo t de ??? y de ??? respectivamente.
+Significancia de la tendencia
 
-Se deben contemplar los 3 esquemas posibles:
-$$
-\Delta Y_t=\gamma Y_{t-1}+\sum_{i=2}^{p}\beta_i\Delta Y_{t-i+1}+ \varepsilon_t\\
-\Delta Y_t=\alpha +\gamma Y_{t-1}+\sum_{i=2}^{p}\beta_i\Delta Y_{t-i+1}+\varepsilon_t\\
-\Delta Y_t=\alpha +\beta t+\gamma Y_{t-1}+\sum_{i=2}^{p}\beta_i\Delta Y_{t-i+1}+\varepsilon_t
-$$
+```{r}
+
+```
+
+Significancia del intercepto
+
+
+Posteriormente, se debe identificar el orden de la integración de cada una de estas variables. Para ello, diferenciaremos una vez ambas series y a estas diferencias les realizamos nuevamente las pruebas de raíz unitaria DF o DFA dependiendo del caso. Estos resultados tienen que rechazar la hipótesis nula de que existe raíz unitaria en la serie diferenciada, así sabremos que ambas series son integradas de orden 1, lo cual es una condición para que exista cointegración.
+
+```{r}
+
+```
+
+Como en este caso el estadístico de ambas series cayó en la zona de rechazo, no existe raíz unitaria en la diferencia de cada serie, por lo tanto podemos decir que las variables originales son I(1).
+
+Para verificar que existe cointegración, lo primero que se debe hacer es plantear un modelo con una variable endogenizada. En este caso endogenizaremos el PIB real.
+
+```{r}
+
+```
+
+Sacar residuales: revisar si tienen raíz unitaria mediante Tau, comparando con valores críticos de Engle-Yoo.
+
+```{r}
+
+```
+
+TEST DE CAUSALIDAD DE GRANGER
+
+La causalidad en el sentido de Granger es una condición necesaria pero no suficiente para la existencia de verdadera causalidad, porque se podría tener una relación espúrea entre una variable retardada (datos del pasado) y otra variable, y este vacío se debe suplir con literatura y lógica. Es una prueba de hipótesis estadística que sirve para determinar si una serie sirve para pronosticar otra serie, a la vez que determinar si predecir los datos de una variable X, por ejemplo, resulta mejor de también saber los datos previos de una variable Y, o es mejor simplemente pronosticar únicamente con los datos del pasado de la variable X.
+
+Hay varias maneras de construir el estadístico de causalidad de Granger. Uno de ellos es construido con los dos R^2 posibles para la variable X que en este caso es la variable "dependiente". Al primer R^2 posible lo llamaremos R^2_R, que proviene de aquel modelo que sólo es explicado por los rezagos de la serie X. Al segundo R^2 lo llamaremos R^2_F, que proviene de aquel modelo que es explicado tanto por los rezagos de la variable X como por los rezagos de la variable Y. La construcción del estadístico se realiza de la siguiente manera:
+
+$$GC=\dfrac{(R^2_F-R^2_R)/m}{(1-R^2_F)/(N-K_F-1)}\sim F(m,N-K_F-1)\\m:número\ de\ rezagos\ de\ la\ variable\ independiente\ incluidas\ en\ el\ modelo\ F\\K_F:número\ de\ coeficientes\ totales\ del\ modelo\ F$$
+
+Para aplicar la prueba de Granger, las variables deben ser integradas del mismo orden.
+
+Iniciamos planteando una regresión en la cual el PIB dependa de su último rezago.
+
+```{r}
+
+```
+
+Posteriormente planteamos una regresión en la cual el PIB dependa de su último rezago y del último rezago de las exportaciones
+
+```{r}
+
+```
+
+Estimamos ambas por OLS
+
+```{r}
+
+```
+
+
+
+https://www.banrep.gov.co/es/glosario/producto-interno-bruto-pib
+https://www.icesi.edu.co/blogs/icecomex/2008/01/25/36/
+
+
