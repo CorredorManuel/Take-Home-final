@@ -31,8 +31,6 @@ histograma <- function(data,proceso){
 
 ##############################
 
-
-
 TaoTest <- function(valores,repeticiones,modelod){
   
   matriz1 <- matrix(data = NA,nrow = valores,ncol = repeticiones)
@@ -76,4 +74,31 @@ TaoTest <- function(valores,repeticiones,modelod){
     verificarse[i] <- modelo[indice,i]/sqrt(varcov[indice,indice])
   }
   return(verificarse)
+}
+
+# Creación de dos funciones que crean una matriz de lags
+myLag <- function(x, n){
+  if(n >= length(x))
+    return(rep(NA,n))
+  else if(n < length(x) & n > 0) 
+    c(rep(NA,n), x[1:(length(x)-n)]) 
+}
+lagit <- function(x,y){#ESTA FUNCION GUARDA LOS LAGS EN COLUMNAS
+  cbind(x, sapply(y, function(z) myLag(x,z)))
+}
+
+#Creación de funcion que calcula las actocorrelaciones parciales
+ACFfun00 <- function(Z,K){
+  media <- 0
+  N <- length(Z)
+  ACF <- matrix(data = NA,nrow = (K+1),ncol = 1)#creación vector vacio
+  for(k in 0:K){
+    Zk <- Z[(k+1):N] # valor eliminados al inicio
+    Zklag <- Z[1:(N-k)] #valores eliminados al final
+    numerador <- sum((Zk-media)*(Zklag-media))
+    denominador <- sum((Z-media)^2)
+    ACF[k+1] <- numerador/denominador
+  }
+  #plot(ACF,type="h")
+  return(ACF)
 }

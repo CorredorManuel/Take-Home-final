@@ -3,7 +3,7 @@
     "path": "~/Documents/GitHub/Take Home final/punto3.v3.R",
     "project_path": "punto3.v3.R",
     "type": "r_source",
-    "hash": "1109419652",
+    "hash": "3528516063",
     "contents": "",
     "dirty": false,
     "created": 1668224987107.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled3",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "181,25",
-        "scrollLine": "165"
+        "cursorPosition": "4,43",
+        "scrollLine": "0"
     },
-    "folds": "7|24|12|0|\n13|23|15|0|\n18|26|31|0|\n49|18|118|0|\n124|6|148|0|\n",
-    "lastKnownWriteTime": 1668322254,
+    "folds": "22|18|91|0|\n97|6|121|0|\n",
+    "lastKnownWriteTime": 1668322591,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1668322254867,
+    "last_content_update": 1668322591901,
     "read_only": false,
     "read_only_alternatives": []
 }
