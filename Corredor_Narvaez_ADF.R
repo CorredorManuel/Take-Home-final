@@ -165,25 +165,3 @@ if( etapa1.2[3]<Valor_tautau[2]) {#se toma la siginficancia al 5% del estadisiti
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
