@@ -240,3 +240,37 @@ d_rezagos <- function(data,d){
   d1
 }
 
+
+Etapas <- function(matriz,etapa){
+  Y <- matrix() 
+  X <- matrix()
+  Y_D<- matrix()
+  valores <- length(matriz)
+  filas <- if(etapa=="etapa4"){filas =1}else if(etapa=="etapa3"){filas =2}else{filas =3}
+  modelo <- matrix(data = NA,nrow =(filas) ,ncol =1) #matriz para guardar coeficientes
+  Y <- matriz[(1:valores-1)]
+  for(k in 2:valores){ #calculo de delta de Y
+    Y_D[k-1] <-  matriz[k]-matriz[k-1]
+  }
+  X <- cbind(1,seq(from=1,to=valores-1),Y)# Creacion matriz de diseño
+  X <- switch (etapa,
+               etapa4 = cbind(Y),
+               etapa3 = cbind(1,Y),
+               etapa1 = cbind(1,seq(from=1,to=valores-1),Y),
+  )
+  X <- as.matrix(X)
+  modelo[,1] <- solve(t(X)%*%X)%*%t(X)%*%Y_D #Regresión del modelo
+  indice <- dim(modelo)[1]
+  df <- dim(X)[1]-dim(X)[2]
+  ygorro <- (X%*%modelo[1:indice])
+  egorro <- c(Y_D-ygorro)
+  N <- length(egorro)
+  vare <- (1/(N-1))*sum(t(egorro)%*%egorro)
+  varcov <- vare*solve(t(X)%*%X)
+  
+  verificarse <- c()
+  for( i in 1:indice){
+    verificarse[i]<- modelo[i,1]/sqrt(varcov[i,i])
+  }
+  return(verificarse)
+}   
