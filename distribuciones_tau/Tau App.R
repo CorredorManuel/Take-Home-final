@@ -39,14 +39,14 @@ interfaz <- fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
+      # Output: Header + table of distribution ----
+      h4("Valores Criticos de las distribuciones"),
+      tableOutput("view"),
       plotOutput("grafiquita"),
       plotOutput("grafiquita1"),
       h4("Grafica taotao"),
-      plotOutput("grafiquita2"),
+      plotOutput("grafiquita2")
 
-      # Output: Header + table of distribution ----
-      h4("Valores Criticos de las distribuciones"),
-      tableOutput("view")
     )
   )
 )
@@ -55,6 +55,79 @@ interfaz <- fluidPage(
 # Define server logic required to draw a histogram
 
 back <- function(input, output) {
+  
+  
+  output$view <- renderTable({
+    
+    
+    repeticiones <- input$repeticiones
+    valores <- input$datos
+    matriz <- matrix(data = NA,nrow = valores,ncol = repeticiones)
+    
+    for( j in 1:repeticiones){
+      set.seed(j)
+      e <- rnorm(n=valores)
+      N <- length(e)
+      phi1 <- 1
+      X1 <- matrix(data = NA,nrow = N,ncol = 1)
+      for(i in 2:N){
+        X1[1] <- 0
+        X1[i] <- phi1*(X1[i-1]) +e[i]
+      }
+      matriz[,j] <- X1
+    }
+    
+    
+    TaoTest <- function(matriz,repeticiones,modelod){
+      Y <- matrix()
+      Y_D <- matrix()
+      X <- matrix()
+      filas <- if(modelod=="tao"){filas =1}else if(modelod=="taomiu"){filas =2}else{filas =3}
+      verificarse <- matrix()
+      modelo <- matrix(data = NA,nrow =filas ,ncol =repeticiones)
+      for(i in 1:repeticiones){
+        Y <- matriz[(1:valores-1),i]
+        for(k in 2:valores){
+          Y_D[k-1] <-  matriz[k,i]-matriz[k-1,i]
+        }
+        X <- switch (modelod,
+                     tao = cbind(Y),
+                     taomiu = cbind(1,Y),
+                     taotao = cbind(1,seq(from=1,to=valores-1),Y),
+        )
+        X <- as.matrix(X)
+        modelo[,i] <- solve(t(X)%*%X)%*%t(X)%*%Y_D
+        indice <- dim(modelo)[1]
+        ygorro <- (X%*%modelo[1:indice,i])
+        egorro <- c(Y_D-ygorro)
+        #K <- 1
+        N <- length(egorro)
+        vare <- (1/(N-1))*sum(t(egorro)%*%egorro)
+        varcov <- vare*solve(t(X)%*%X)
+        verificarse[i] <- modelo[indice,i]/sqrt(varcov[indice,indice])
+      }
+      return(verificarse)
+    }
+    
+    verificarse1 <- TaoTest(matriz,repeticiones,"tao")
+    verificarse2 <- TaoTest(matriz,repeticiones,"taomiu")
+    verificarse3 <- TaoTest(matriz,repeticiones,"taotao")
+    
+    
+    a <- round(quantile(verificarse1,probs = c(0.01,0.05,0.1)),4)
+    a <- c("tau",a)
+    b <- round(quantile(verificarse2,probs = c(0.01,0.05,0.1)),4)
+    b <- c("taumiu",b)
+    c <- round(quantile(verificarse3,probs = c(0.01,0.05,0.1)),4)
+    c <- c("tautau",c)
+    
+    tabulacion <- as.matrix(rbind(a,b,c))
+    
+    tabulacion
+    
+    
+  }
+  )
   output$grafiquita <- renderPlot({
     
     
@@ -115,10 +188,9 @@ back <- function(input, output) {
     
     g1
 
-    #grid.arrange(g1,g2,g3)
+
     
   }
-  
   )
   output$grafiquita1 <- renderPlot({
     
@@ -173,7 +245,7 @@ back <- function(input, output) {
     }
 
     verificarse2 <- TaoTest(matriz,repeticiones,"taomiu")
-    verificarse3 <- TaoTest(matriz,repeticiones,"taotao")
+
     
     source("~/Documents/GitHub/Take Home final/Histograma.R")
 
@@ -181,15 +253,13 @@ back <- function(input, output) {
     proceso2 <- "taomiu"
     g2 <- histograma(verificarse2,proceso = proceso2)
     
-    proceso3 <- "taotao"
-    g3 <- histograma(verificarse3,proceso = proceso3)
+
     
     g2
     
     #grid.arrange(g1,g2,g3)
     
   }
-  
   )
   output$grafiquita2 <- renderPlot({
     
@@ -250,80 +320,8 @@ back <- function(input, output) {
     g3
     
   }
-  
   )
-    output$view <- renderTable({
-      
-      
-      repeticiones <- input$repeticiones
-      valores <- input$datos
-      matriz <- matrix(data = NA,nrow = valores,ncol = repeticiones)
-      
-      for( j in 1:repeticiones){
-        set.seed(j)
-        e <- rnorm(n=valores)
-        N <- length(e)
-        phi1 <- 1
-        X1 <- matrix(data = NA,nrow = N,ncol = 1)
-        for(i in 2:N){
-          X1[1] <- 0
-          X1[i] <- phi1*(X1[i-1]) +e[i]
-        }
-        matriz[,j] <- X1
-      }
-      
-      
-      TaoTest <- function(matriz,repeticiones,modelod){
-        Y <- matrix()
-        Y_D <- matrix()
-        X <- matrix()
-        filas <- if(modelod=="tao"){filas =1}else if(modelod=="taomiu"){filas =2}else{filas =3}
-        verificarse <- matrix()
-        modelo <- matrix(data = NA,nrow =filas ,ncol =repeticiones)
-        for(i in 1:repeticiones){
-          Y <- matriz[(1:valores-1),i]
-          for(k in 2:valores){
-            Y_D[k-1] <-  matriz[k,i]-matriz[k-1,i]
-          }
-          X <- switch (modelod,
-                       tao = cbind(Y),
-                       taomiu = cbind(1,Y),
-                       taotao = cbind(1,seq(from=1,to=valores-1),Y),
-          )
-          X <- as.matrix(X)
-          modelo[,i] <- solve(t(X)%*%X)%*%t(X)%*%Y_D
-          indice <- dim(modelo)[1]
-          ygorro <- (X%*%modelo[1:indice,i])
-          egorro <- c(Y_D-ygorro)
-          #K <- 1
-          N <- length(egorro)
-          vare <- (1/(N-1))*sum(t(egorro)%*%egorro)
-          varcov <- vare*solve(t(X)%*%X)
-          verificarse[i] <- modelo[indice,i]/sqrt(varcov[indice,indice])
-        }
-        return(verificarse)
-      }
 
-      verificarse1 <- TaoTest(matriz,repeticiones,"tao")
-      verificarse2 <- TaoTest(matriz,repeticiones,"taomiu")
-      verificarse3 <- TaoTest(matriz,repeticiones,"taotao")
-
-
-      a <- round(quantile(verificarse1,probs = c(0.01,0.05,0.1)),4)
-      a <- c("tau",a)
-      b <- round(quantile(verificarse2,probs = c(0.01,0.05,0.1)),4)
-      b <- c("taumiu",b)
-      c <- round(quantile(verificarse3,probs = c(0.01,0.05,0.1)),4)
-      c <- c("tautau",c)
-      
-      tabulacion <- as.matrix(rbind(a,b,c))
-
-      tabulacion
-
-      
-    }
-    
-  )
   
 }
 # Run the application 
