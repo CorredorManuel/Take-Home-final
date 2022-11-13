@@ -184,20 +184,21 @@ p_encontrase <- function(pmax,data){
     print("El orden P de la parte aumentada que genera rudio Blanco, que tiene significancia y que es parsimonioso es el:")
     print(revisar[1])
   }
-  valor <- as.numeric(revisar[1])
-  base <-ggplot() + xlim(-8, 8)+
-    geom_function(aes(colour = "t, df = N-K"), fun = dt, args = list(df = df))+
-    stat_function(fun = dnorm, geom = "polygon", color = "black", fill = "green", alpha = 0.5)+
-    geom_vline(aes(xintercept=izquierda),linetype="dashed",color="red")+
-    geom_vline(aes(xintercept=derecha),linetype="dashed",color="red")+
-    geom_vline(aes(xintercept=verificarse[valor]),linetype="dashed",color="blue")+ #aca modifique la posicion
-    geom_density(fill="black", alpha = .5)+
-    theme(legend.position = c(0.2, 0.9),
-          legend.background = element_rect(fill = "white"))
   
- final <-  base + labs(title = 'Curva de distribución t',subtitle = 'verificacion de significancia del coeficiente P de ADF',color='valor t estadistico')
-  
-  print(final)
 
 }
+
+
+#esta grafica verifica visualmente si el p obtenido es significante 
+base <-ggplot() + xlim(-8, 8)+
+  geom_function(aes(colour = "t, df = N-K"), fun = dt, args = list(df = df))+
+  stat_function(fun = dnorm, geom = "polygon", color = "black", fill = "green", alpha = 0.5)+
+  geom_vline(aes(xintercept=izquierda),linetype="dashed",color="red")+
+  geom_vline(aes(xintercept=derecha),linetype="dashed",color="red")+
+  geom_vline(aes(xintercept=verificarse[length(verificarse)]),linetype="dashed",color="blue")+ #aca modifique la posicion
+  geom_density(fill="black", alpha = .5)+
+  theme(legend.position = c(0.2, 0.9),
+        legend.background = element_rect(fill = "white"))
+
+final <-  base + labs(title = 'Curva de distribución t',subtitle = 'verificacion de significancia del coeficiente P de ADF',color='valor t estadistico')
 
