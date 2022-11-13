@@ -5,21 +5,20 @@
 # respetando que el modelo sea parsimonioso
 
 library(readxl)
-#datos <- read_excel("Libro1.xlsx")
-#Importacion de Datos
-#library(readxl)
-
-library(readxl)
-#matriz <- diff(log(datos$PIB))
+datos <- read_excel("libro1.xlsx")
+matriz <- diff(log(datos$PIB))
 
 datos <- read_excel("datos.xlsx")
-matriz <- datos$NEQUI #
+matriz <- diff(datos$NEQUI)
 
-matriz <-xt1  #serie diferenciada
+#matriz <-xt1  #serie diferenciada
 #############matriz <-  SerieW_t####################### miguel luna
 pmax <- 100 #especifico un P maximo para la verificación
 identificacion <- matrix(nrow = pmax,ncol = 2)
 #IDENTIFIACIÓN ORDEN P
+p_encontrase <- function(pmax,data){
+  matriz  <- data
+  identificacion <- matrix(nrow = pmax,ncol = 2)
 for (p in 1:pmax){
 # Creación de variables requeridas
   Y <- matrix() 
@@ -58,28 +57,21 @@ for (p in 1:pmax){
   verificarse 
   izquierda <- qt(0.025,N-indice)#cola izquierda
   derecha <- qt(0.025,N-indice,lower.tail = FALSE)
-  
   if(verificarse[i]>izquierda & verificarse[i]< derecha) { #alta potencia
     significancia[i] <-  "No se puede rechazar que el coeficiente sea 0, no es significativo"
   }else{
     significancia[i] <- "Se puede rechazar que el coeficiente sea O,es significativo"
   }
   }
-  
   resultado1 <- c()
   k <- trunc(N/4) # 100 poner un valor para correr mayor a 50
   Rho_residuales <- ACFfun00(egorro,k)
-  #Q23 <- (N)*(N+2)*(sum(Rho_residuales[(2:p)]**2))/(N-p)
-  
-  
-  
   Q23 <- matrix (NA,p,2)
   for (i in 1:p){
     b<-Box.test(matriz, lag =i, type="Ljung")
     Q23[i,] <- c(b$statistic , b$p.value )
   }
   colnames(Q23) <-  c("statistic", "p.value")
-  
   k <- trunc(N/4)
   ValorCritico <- qchisq(p = 0.95,df = p,FALSE)
   if( ValorCritico >Q23[p] ) {
@@ -89,9 +81,18 @@ for (p in 1:pmax){
   }
   identificacion[p,1] <- cbind(significancia[indice])
   identificacion[p,2] <- cbind(resultado1)
+  
+}
+
+identificacion1 <- which(identificacion[,1]=="Se puede rechazar que el coeficiente sea O,es significativo")
+identificacion2 <- which(identificacion[,2]=="no se rechaza la hipotesis nula,son rudio blanco")
+revisar <- match(identificacion1 ,identificacion2)
+print("el orden P de la parte aumentada que genera rudio Blanco, que tiene significancia y que es parsimonioso es")
+p_final <- print(revisar[1])
 }
 
 
+revisar <- p_encontrase(100,matriz)
 #View(identificacion)  ##se revisa si el orden p genera Ruido Blanco y si es significante
 ### verificación visual de la significancia del orden P "en este caso se encuentra siginifica en el orden p= 46" 
 
