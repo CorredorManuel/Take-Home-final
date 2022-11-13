@@ -1,0 +1,51 @@
+---
+title: "corredornarvaez"
+author: "Gabriela Narváez"
+date: "2022-11-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Una introducci ́on donde se presente una descripci ́on de las series (unidad de medici ́on, periodicidad,fuente, estad ́ıstica descriptiva, hechos relevantes), contexto te ́orico que respalde y explique la relaci ́onte ́orica entre ellas.
+
+#Relación entre el PIB y el nivel de exportaciones en Colombia.
+
+Según el Banco de la República de Colombia (2022), el Producto Interno Bruto es el "valor de mercado de los bienes y servicios finales producidos usando todos los factores de producción disponibles dentro de un país en un periodo determinado." Existen dos tipos de PIB: el PIB nominal, el cual se calcula teniendo en cuenta los precios corrientes de los productos y servicios que se transan en la economía; y el PIB real que se calcula fijando los precios de un año base, es decir, se calcula como si hubiesen precios constantes para omitir el efecto de la inflación en el crecimiento económico. El PIB se divide en 12 agrupaciones de actividades económicas que contribuyen a él. Visto desde el enfoque del gasto, el PIB se desagrega de la siguiente forma: PIB= C+I+G+(X-M), donde C hace referencia al consumo, I a la inversión, G al gasto público, X a las exportaciones y M a las importaciones, y está medido en miles de millones de pesos. Aquí es donde se ve que las exportaciones tienen una relación económica positiva con el crecimiento económico llamada "Export Led Growth"(Alonso y Patiño,2007), en la cual ahondaremos más adelante.
+
+Por su parte, las exportaciones son la salida de bienes y servicios del país o de una zona franca para ser enviados a otro país o zona franca, y se produce una entrada de divisas al país o la zona franca del que salieron los bienes y servicios. Según el ICESI (2008), existen dos tipos de exportaciones: las tradicionales, que son aquellas que no presentan ninguna alteración importante del bien durante el proceso productivo; y las no tradicionales, que son aquellas exportaciones de bienes que tienen un gran valor agregado en su proceso productivo y que generalmente cambian su importancia dentro de la economía por su crecimiento como producto de venta internacional. Éstas son medidas en miles de millones de pesos.
+
+Estadística descriptiva:
+Importamos las series del PIB real y las exportaciones totales con periodicidad trimestral, yendo desde el primer trimestre del 2005 hasta el segundo trimestre de 2022. Por la diferencia de escalas, utilizaremos las variables en logaritmos.
+
+```{r}
+library(readxl)
+Datos_PIB_y_exportaciones <- read_excel("~/Datos PIB y exportaciones.xlsx")
+View(Datos_PIB_y_exportaciones)
+
+PIB<-log(Datos_PIB_y_exportaciones$PIB)
+Exportaciones<-log(Datos_PIB_y_exportaciones$Exportaciones)
+
+
+```
+
+En la tesis presentada por el docente de la Universidad del Valle Omar A. Ríos, se demuestra que entre el crecimiento del PIB a precios constantes de Colombia y las exportaciones en Colombia para el período comprendido entre los años 2000 y 2013 existe cointegración, partiendo de que en esos años se había establecido causalidad entre ellas debido a las políticas de libre comercio que había en ese momento (Rendón, 2007), ya que se verifica dentro del documento que son variables I(1) y que existe un único vector de cointegración que anula la tendencia común entre estas dos variables.
+
+PUNTO 2: VERIFICACIÓN DE LA EXISTENCIA DE COINTEGRACIÓN
+
+Para la verificación de la cointegración entre estas dos variables el primer paso a seguir es determinar mediante las pruebas de raíz unitaria si existe raíz unitaria en estas dos variables. Para ello es imperativo determinar el p que genera ruido blanco en los residuales, con el cual hay parsimonia y además es significativo.
+
+```{r}
+
+```
+
+El p determina si utilizamos DF o ADF. Si p=1, se utiliza DF, si p>1, se utiliza ADF. En este caso, porque el resultado fue p=??? y p=???, procederemos a utilizar las pruebas tipo t de ??? y de ??? respectivamente.
+
+Se deben contemplar los 3 esquemas posibles:
+$$
+\Delta Y_t=\gamma Y_{t-1}+\sum_{i=2}^{p}\beta_i\Delta Y_{t-i+1}+ \varepsilon_t\\
+\Delta Y_t=\alpha +\gamma Y_{t-1}+\sum_{i=2}^{p}\beta_i\Delta Y_{t-i+1}+\varepsilon_t\\
+\Delta Y_t=\alpha +\beta t+\gamma Y_{t-1}+\sum_{i=2}^{p}\beta_i\Delta Y_{t-i+1}+\varepsilon_t
+$$
