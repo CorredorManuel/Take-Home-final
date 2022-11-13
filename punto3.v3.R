@@ -181,7 +181,7 @@ for (p in 1:pmax){
     
     source("Funciones.R")
     #se realizan 50.000 repeticiones para obtener estadisticos altamente efectivos 
-    verificarse3 <- TaoTest(matriz1,50000,"taotao") #calculo con intercepto y tendencia
+    verificarse3 <- TaoTest(100,50000,"taotao") #calculo con intercepto y tendencia
     Valor_tautau <- quantile(verificarse3,probs = c(0.01,0.05,0.1))
   
 

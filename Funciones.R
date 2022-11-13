@@ -29,28 +29,25 @@ histograma <- function(data,proceso){
 
 
 
-#####################################################
-repeticiones <- 50000
-valores <- 100
-matriz1 <- matrix(data = NA,nrow = valores,ncol = repeticiones)
+##############################
 
 
-for( j in 1:repeticiones){
-  set.seed(j)
-  e <- rnorm(n=valores)
-  N <- length(e)
-  phi1 <- 1
-  X1 <- matrix(data = NA,nrow = N,ncol = 1)
-  for(i in 2:N){
-    X1[1] <- 0
-    X1[i] <- phi1*(X1[i-1]) +e[i]
+
+TaoTest <- function(valores,repeticiones,modelod){
+  
+  matriz1 <- matrix(data = NA,nrow = valores,ncol = repeticiones)
+  for( j in 1:repeticiones){
+    set.seed(j)
+    e <- rnorm(n=valores)
+    N <- length(e)
+    phi1 <- 1
+    X1 <- matrix(data = NA,nrow = N,ncol = 1)
+    for(i in 2:N){
+      X1[1] <- 0
+      X1[i] <- phi1*(X1[i-1]) +e[i]
+    }
+    matriz1[,j] <- X1
   }
-  matriz1[,j] <- X1
-}
-
-
-
-TaoTest <- function(matriz1,repeticiones,modelod){
   Y <- matrix()
   Y_D <- matrix()
   X <- matrix()
