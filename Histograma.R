@@ -6,7 +6,7 @@ histograma <- function(data,proceso){
   palabra <- switch (proceso,
                      tao = "",
                      taomiu = "miu",
-                     taotao = "tao",
+                     taotao = "tau",
   )
   data <- as.data.frame(data )
   round(data,4)
@@ -15,7 +15,7 @@ histograma <- function(data,proceso){
                    fill = "white") +
     geom_vline(aes(xintercept=mean(data )),linetype="dashed",color="navy")+
     geom_density(fill="blue", alpha = .5) +
-    labs(title=paste("               Histograma Tao",palabra),
+    labs(title=paste("                                Histograma Tau",palabra),
          
          x="Observaciones",y="Frecuecia" )+
     

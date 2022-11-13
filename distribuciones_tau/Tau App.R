@@ -42,9 +42,11 @@ interfaz <- fluidPage(
       # Output: Header + table of distribution ----
       h4("Valores Criticos de las distribuciones"),
       tableOutput("view"),
+      h4("               Grafica tau"),
       plotOutput("grafiquita"),
+      h4("               Grafica taumiu"),
       plotOutput("grafiquita1"),
-      h4("Grafica taotao"),
+      h4("               Grafica tautau"),
       plotOutput("grafiquita2")
 
     )

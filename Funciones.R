@@ -254,7 +254,7 @@ Etapas <- function(matriz,etapa){
   for(k in 2:valores){ #calculo de delta de Y
     Y_D[k-1] <-  matriz[k]-matriz[k-1]
   }
-  X <- cbind(1,seq(from=1,to=valores-1),Y)# Creacion matriz de diseño
+
   X <- switch (etapa,
                etapa4 = cbind(Y),
                etapa3 = cbind(1,Y),
@@ -279,24 +279,27 @@ Etapas <- function(matriz,etapa){
 }   
 
 
-Etapas1 <- function(matriz,etapa){
+
+Etapas1 <- function(matriz,etapa,p){
   Y <- matrix() 
   X <- matrix()
   Y_D<- matrix()
   valores <- length(matriz)
-  filas <- if(etapa=="etapa4"){filas =1}else if(etapa=="etapa3"){filas =2}else{filas =3}
+  filas <- if(etapa=="etapa4"){filas =1+p}else if(etapa=="etapa3"){filas =2+p}else{filas =3+p}
   modelo <- matrix(data = NA,nrow =(filas) ,ncol =1) #matriz para guardar coeficientes
   Y <- matriz[(1:valores-1)]
   for(k in 2:valores){ #calculo de delta de Y
     Y_D[k-1] <-  matriz[k]-matriz[k-1]
   }
-  X <- cbind(1,seq(from=1,to=valores-1),Y)# Creacion matriz de diseño
+  dY_D  <- lagit(Y_D,1:(p)) #Aplicacion de la funcion de Lags
+  dY_D <- dY_D[,2:(p+1)]
   X <- switch (etapa,
-               etapa4 = cbind(Y),
-               etapa3 = cbind(1,Y),
-               etapa1 = cbind(1,seq(from=1,to=valores-1),Y),
+               etapa4 = cbind(dY_D,Y),
+               etapa3 = cbind(1,dY_D,Y),
+               etapa1 = cbind(1,seq(from=1,to=valores-1),dY_D,Y),
   )
-  
+  X <- X[-c(1:p),]# Ajuste de la matriz eliminando valorres NA
+  Y_D <- Y_D[-c(1:p)]
   X <- as.matrix(X)
   modelo[,1] <- solve(t(X)%*%X)%*%t(X)%*%Y_D #Regresión del modelo
   indice <- dim(modelo)[1]

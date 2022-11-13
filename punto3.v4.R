@@ -134,8 +134,32 @@ etapa4 <- Etapas(matriz,"etapa4")
 matriz <- diferencia(matriz,1)
 revisar <- p_encontrase(100,matriz) 
 
+# se encuentra que el P mas pequeño que es sigmificante y genera ruido blanco es el 39
+#verificación 
+etapa1.1 <- Etapas1(matriz,"etapa1",39)
+dimension1 <-length(etapa1.1)
+if( etapa1.1[dimension1]<Valor_tautau[2]) {#se toma la siginficancia al 5% del estadisitico
+  "Gamma es estadisticamente diferente de cero, es significativo"
+} else {
+  "Gamma es estadisticamente  cero, no es significativo"
+}
 
+#se encuentra que el estadistico tipo t generado del coeficiente gamma es significantivo por lo tanto 
+#el estadistico es de alta potencia
 
+#verificación de la variable diferenciada sin agregar un orden p a la regresión, 
+etapa1.2 <- Etapas(matriz,"etapa1")
+if( etapa1.2[3]<Valor_tautau[2]) {#se toma la siginficancia al 5% del estadisitico
+  "Gamma es estadisticamente diferente de cero, es significativo"
+} else {
+  "Gamma es estadisticamente  cero, no es significativo"
+}
+
+#se encuentra que el estadistico tipo t generado del coeficiente gamma es significantivo por lo tanto 
+#el estadistico es de alta potencia
+
+#como se tuvo que realizar una diferenciacion de la serie para encontrar la significacia del estadistico
+#se concluye queel orden de integración de esta serie es I(1) por lo que se tiene Raiz Unitaria
 
 
 
