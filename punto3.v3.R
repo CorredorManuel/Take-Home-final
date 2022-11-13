@@ -6,7 +6,7 @@
 
 library(readxl)
 datos <- read_excel("libro1.xlsx")
-matriz <- diff(log(datos$PIB))
+matriz <- log(datos$PIB)
 
 datos <- read_excel("datos.xlsx")
 matriz <- diff(datos$NEQUI)
