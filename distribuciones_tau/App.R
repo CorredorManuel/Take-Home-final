@@ -184,7 +184,7 @@ back <- function(input, output) {
     verificarse1 <- TaoTest(matriz,repeticiones,"tao")
 
     
-    source("~/Documents/GitHub/Take Home final/Histograma.R")
+    source("Histograma.R")
     proceso1 <- "tao"
     g1 <- histograma(verificarse1,proceso = proceso1)
     
@@ -249,7 +249,7 @@ back <- function(input, output) {
     verificarse2 <- TaoTest(matriz,repeticiones,"taomiu")
 
     
-    source("~/Documents/GitHub/Take Home final/Histograma.R")
+    source("Histograma.R")
 
     
     proceso2 <- "taomiu"
@@ -316,7 +316,7 @@ back <- function(input, output) {
     }
     
     verificarse3 <- TaoTest(matriz,repeticiones,"taotao")
-    source("~/Documents/GitHub/Take Home final/Histograma.R")
+    source("Histograma.R")
     proceso3 <- "taotao"
     g3 <- histograma(verificarse3,proceso = proceso3)
     g3

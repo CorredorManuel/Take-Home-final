@@ -296,7 +296,7 @@ lags<-lags[(2:length(residualcitos)),2]
 
 
 gamma<-lm(diferencia(residualcitos,1)~lags)
-gamma
+summary(gamma)
 ```
 
 ## Engle-Yoo
@@ -304,6 +304,7 @@ gamma
 Comparando con el valor crítico de Engle-Yoo al 5%:
 
 ```{r}
+-0.1127066/0.0565306
 Valor_critico_Engle_Yoo<--3.461
 
 if(gamma$coefficients[2]<Valor_critico_Engle_Yoo) {#se toma la siginficancia al 5% del estadisitico
